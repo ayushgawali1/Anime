@@ -8,7 +8,7 @@ function Bookmark() {
     const [getBookmarkAnime,setGetBookmarkAnime] = useState([]);
     const arr = [1,2,3,4,5,6]
 
-    const url = "http://localhost:4000";
+    const url = "https://anime-backend-7pi0.onrender.com";
 
     const getBookmark = async () => {
         const userId = localStorage.getItem("id");

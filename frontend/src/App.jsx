@@ -11,7 +11,7 @@ import SideBar from './component/SideBar';
 import All from './component/All';
 import Overview from './component/Overview';
 import axios from "axios";
-const URL = "http://localhost:4000";
+const url = "https://anime-backend-7pi0.onrender.com";
 
 function App() {
   const [user, setUser] = useState(false);
@@ -34,7 +34,7 @@ function App() {
   return (
     <>
       <ToastContainer />
-      <Login URL={URL} user={user} setUser={setUser} open={open} setOpen={setOpen} />
+      <Login url={url} user={user} setUser={setUser} open={open} setOpen={setOpen} />
       <div className='bg-black text-white h-full select-none'>
         <Navbar user={user} setUser={setUser} setOpen={setOpen} />
         <Routes>

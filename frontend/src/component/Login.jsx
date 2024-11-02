@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-function Login({ URL , user, setUser , open , setOpen }) {
+function Login({ url , user, setUser , open , setOpen }) {
 
     const navigate = useNavigate();
     
@@ -14,7 +14,7 @@ function Login({ URL , user, setUser , open , setOpen }) {
     const { register, handleSubmit } = useForm();
     const onSubmit = async (data) => {
         try {
-            const responce = await axios.post(URL + `/user/${login ? "register" : "login"}`, data);
+            const responce = await axios.post(url + `/user/${login ? "register" : "login"}`, data);
             console.log(responce);
             
             if (responce.status === 200) {

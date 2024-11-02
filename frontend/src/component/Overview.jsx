@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 function Overview() {
 
-  const url = "http://localhost:4000";
+  const url = "https://anime-backend-7pi0.onrender.com";
 
   const [oneAnime,setOneAnime] = useState({});
 

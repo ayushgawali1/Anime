@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 //   https://tailwindui.com/plus/img/ecommerce-images/product-page-01-related-product-01.jpg
 export default function All({ bookmark, setBookmark }) {
-  const url = "http://localhost:4000";
+  const url = "https://anime-backend-7pi0.onrender.com";
 
   const [allAnime, setAllAnime] = useState([]);
 
