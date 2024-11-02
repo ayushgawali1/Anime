@@ -20,7 +20,9 @@ await dbConnect();
 app.use("/anime",animeRoute);
 
 app.use("/user",userRoute);
-
+app.get("/",(req,res) => {
+    res.send("<h1>Hell</h1>");
+})
 
 app.listen(port, () => {
     console.log(`http://localhost:${port}`);
