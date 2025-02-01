@@ -68,7 +68,7 @@ const subCategories = [
     { name: 'Laptop Sleeves', href: '#' },
 ]
 
-function Filter() {
+function Filter({searchAnimes , setSearchAnimes}) {
     return (
         <div className="hidden lg:block border h-fit pb-10 p-4 rounded-md">
             {/* <h3 className="sr-only">Categories</h3> */}
@@ -79,6 +79,9 @@ function Filter() {
                     </li>
                   ))}
                 </ul> */}
+            <div className='border w-fit'>
+                <input type="text" value={searchAnimes} onChange={(e) => setSearchAnimes(e.target.value) } />
+            </div>
             <Disclosure key="year" as="div" className="py-6">
                     <h3 className="-my-3 flow-root border-b-2">
                         <DisclosureButton className="group flex w-full items-center justify-between py-3 text-sm text-white hover:cursor-pointer hover:text-gray-500">

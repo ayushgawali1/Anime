@@ -6,22 +6,10 @@ import { FaCheck } from "react-icons/fa6";
 import { IoAdd } from "react-icons/io5";
 import { FaCirclePlay } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
+import { CiGlobe } from "react-icons/ci";
+import { FaGlobe } from "react-icons/fa";
 import axios from "axios"
 import { context } from '../store/contest';
-
-const details = [
-    ["Type", "TV Show"],
-    ["Episodes", "20"],
-    ["Genres", "Adventure, Drama, Supernatural"],
-    ["Aired", "Apr 12, 2021 to Aug 30, 2021"],
-    ["Status", "Finished Airing"],
-    ["Season", "Spring 2021"],
-    ["Studios", "Brain’s Base"],
-    ["Source", "Manga"],
-    ["Rating", "R-17+"],
-    ["Duration", "25 min."]
-];
-
 
 
 function AnimePage() {
@@ -41,19 +29,47 @@ function AnimePage() {
         const query = `
           query ($id: Int , $search: String) {
             Media(id: $id , search: $search, type: ANIME) {
-              id
-              title {
-                english
-              }
-              bannerImage
-              coverImage{
-                extraLarge
-              }
-              averageScore
-              description
-              format
-              seasonYear
-              episodes
+                id
+                title {
+                    english
+                }
+                bannerImage
+                coverImage{
+                    extraLarge
+                }
+                averageScore
+                description
+                format
+                seasonYear
+                episodes
+                status
+                season
+                source
+                genres
+                duration
+                meanScore
+                startDate{
+                    year
+                    month
+                    day
+                }
+                studios {
+                    nodes {
+                        id
+                        name
+                        isAnimationStudio
+                    }
+                }
+                externalLinks {
+                    url
+                    site
+                    type
+                }
+                trailer{
+                    id
+                    site
+                    thumbnail
+                }
             }
           }
         `;
@@ -77,7 +93,7 @@ function AnimePage() {
 
 
             if (data.errors) {
-                console.log(data.errors[0].message);
+                console.log(data.errors);
             } else {
                 setAnime(data.data.Media);
             }
@@ -99,7 +115,7 @@ function AnimePage() {
                     [status]: true
                 }))
             }
-            else{
+            else {
                 setGreen((prev) => ({
                     ...prev,
                     [status]: false
@@ -146,6 +162,19 @@ function AnimePage() {
 
     }
 
+    const details = [
+        ["Type", anime?.format],
+        ["Episodes", anime.episodes],
+        ["Genres", anime.genres?.map((item) => (item + ", "))],
+        ["Aired", (anime?.startDate?.day + " " + anime?.startDate?.month + " " + anime?.startDate?.year) + " to Aug 30, 2021 Fix"],
+        ["Status", anime.status],
+        ["Season", anime.seasonYear],
+        ["Studios", anime?.studios?.nodes?.map((item) => item.isAnimationStudio && (item.name + ", "))],
+        ["Source", anime.source],
+        ["Rating", "R-17+ Fix"],
+        ["Duration", anime.duration + " min"]
+    ];
+
     useEffect(() => {
         fetchAnime()
         window.scrollTo(0, 0);
@@ -160,7 +189,24 @@ function AnimePage() {
             {/* banner */}
             <div className='h-fit bg-neutral-900 mb-6'>
                 <div className='absolute h-90 w-full flex items-end justify-end'>
-                    <button className='flex items-center justify-center gap-2 py-2 px-4 rounded-lg mb-4 mr-6 bg-white text-black'><FaCirclePlay />Watch Trailer</button>
+                    <a
+                        style={{ color: 'black' }}
+                        href={anime?.externalLinks?.filter(item => item.type === 'INFO').map(item => item.url)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className='flex font-medium items-center justify-center gap-2 py-2 px-4 rounded-lg mb-4 mr-6 bg-white text-black '
+                    >
+                        <FaGlobe />Official Site
+                    </a>
+                    <a
+                        style={{ color: 'black' }}
+                        href={`https://youtu.be/${anime?.trailer?.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className='flex font-medium items-center justify-center gap-2 py-2 px-4 rounded-lg mb-4 mr-6 bg-white text-black '
+                    >
+                        <FaCirclePlay />Watch Trailer
+                    </a>
                 </div>
                 <img
                     className='h-90 w-full'

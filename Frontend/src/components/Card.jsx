@@ -12,7 +12,7 @@ function Card({ id, title, averageScore, coverImage, episodes, format, seasonYea
         alt=""
       />
       <div>
-        <h3 className='text-center px-1 my-1 text-lg font-semibold w-full h-7 overflow-hidden group-hover:h-fit transition duration-500'>{title.english}</h3>
+        <h3 className='text-center px-1 my-1 text-lg font-semibold w-full h-7 overflow-hidden group-hover:h-fit transition duration-500'>{title?.english}</h3>
         <div className=' flex gap-2 justify-between px-1'>
           <span className='bg-neutral-800 py-0.5 px-1.5 rounded text-xs'>{format}</span>
           <span className='bg-neutral-800 py-0.5 px-1.5 rounded text-xs'>{seasonYear}</span>

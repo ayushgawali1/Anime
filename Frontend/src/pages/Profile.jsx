@@ -49,7 +49,7 @@ function Profile() {
                 </div>
                 <img
                     className='h-90 w-full'
-                    // src={anime?.bannerImage} 
+                    // src='https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/efaa210d-b55f-407c-bec4-101ae2d536cd/de3iif2-1ef9bdfd-043c-4586-ae57-829bd61cc4cc.png/v1/fill/w_1280,h_427,q_80,strp/solo_leveling_banner_by_godakutsu_de3iif2-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NDI3IiwicGF0aCI6IlwvZlwvZWZhYTIxMGQtYjU1Zi00MDdjLWJlYzQtMTAxYWUyZDUzNmNkXC9kZTNpaWYyLTFlZjliZGZkLTA0M2MtNDU4Ni1hZTU3LTgyOWJkNjFjYzRjYy5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.pvdQB7bL4EhmLd4oKo3eS1u4fjyubbPS_YYKokRRDQM' 
                     alt=""
                 />
             </div>
@@ -58,21 +58,21 @@ function Profile() {
                 {/* Button list */}
                 <div className='flex justify-between px-30 mb-4 items-center'>
                     <div className='flex items-center gap-12'>
-                        <span onClick={() => setSelect("watching")} className={`flex items-center gap-2 px-3 py-1.5 hover:cursor-pointer rounded-lg  ${select.watching ? 'bg-white/30' :'bg-none hover:bg-white/10'}`}>
+                        <span onClick={() => setSelect("watching")} className={`flex items-center gap-2 px-3 py-1.5 hover:cursor-pointer rounded-lg  ${select == "watching" ? 'bg-white/30' :'bg-none hover:bg-white/10'}`}>
                             <FaRegEye />
                             <span className='flex gap-1'>
                                 Watching
                                 <p>{userData?.watching?.length}</p>
                             </span>
                         </span>
-                        <span onClick={() => setSelect("towatch")} className={`flex items-center gap-2 px-3 py-1.5 hover:cursor-pointer rounded-lg  ${select.towatch ? 'bg-white/30' :'bg-none hover:bg-white/10'}`}>
+                        <span onClick={() => setSelect("towatch")} className={`flex items-center gap-2 px-3 py-1.5 hover:cursor-pointer rounded-lg  ${select == "towatch" ? 'bg-white/30' :'bg-none hover:bg-white/10'}`}>
                             <FaRegBookmark />
                             <span className='flex gap-1'>
                                 To Watched
                                 <p>{userData?.towatch?.length}</p>
                             </span>
                         </span>
-                        <span onClick={() => setSelect("watched")} className={`flex items-center gap-2 px-3 py-1.5 hover:cursor-pointer rounded-lg  ${select.watched ? 'bg-white/30' :'bg-none hover:bg-white/10'}`}>
+                        <span onClick={() => setSelect("watched")} className={`flex items-center gap-2 px-3 py-1.5 hover:cursor-pointer rounded-lg  ${ select == "watched" ? 'bg-white/30' :'bg-none hover:bg-white/10'}`}>
                             <FaCheck />
                             <span className='flex gap-1'>
                                 Watched
@@ -115,3 +115,9 @@ function Profile() {
 }
 
 export default Profile
+
+
+
+// "https://geekculture.co/wp-content/uploads/2023/03/solo-leveling-anime-trailer.jpg"
+
+//  "https://www.dexerto.com/cdn-image/wp-content/uploads/2024/05/20/Solo-Leveling-Arise-Level-Up.jpg"

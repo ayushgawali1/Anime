@@ -13,6 +13,7 @@ import {
 } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
+import { CiSearch } from "react-icons/ci";
 
 import Card from '../components/Card';
 import Filter from '../components/Filter';
@@ -78,12 +79,13 @@ function classNames(...classes) {
 
 export default function Catalog() {
 
-  const {pageNo} = useContext(context);
+  const { pageNo } = useContext(context);
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [animeData, setAnimeData] = useState([])
+  const [searchAnimes,setSearchAnimes] = useState('');
 
-  const fetchAnimeData = async (pageNo) => {
+  const fetchAnimeData = async () => {
     const query = `
         query {
           Page(page: ${pageNo}, perPage: 24) {
@@ -125,8 +127,69 @@ export default function Catalog() {
     }
   };
 
+  const searchAnime = async (searchTerm) => {
+    const query = `
+      query ($search: String) {
+        Page(page: ${pageNo}, perPage: 24) {  # Fetch up to 10 results
+          media(search: $search, type: ANIME , sort: POPULARITY_DESC) {
+            id
+              title {
+                english
+              }
+              format
+              seasonYear
+              episodes
+              averageScore
+              coverImage{
+                extraLarge,
+              }
+          }
+        }
+      }
+    `;
+
+    const variables = {
+      search: searchTerm,
+    };
+
+    try {
+      const response = await fetch("https://graphql.anilist.co", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query, variables }),
+      });
+      const data = await response.json();
+      setAnimeData(data.data.Page.media);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const handleSearchClick = (e) => {
+    e.preventDefault();
+    searchAnime(e.target[0].value)
+    setSearchAnimes(e.target[0].value)
+    e.target[0].value =''
+  }
+
   useEffect(() => {
-    fetchAnimeData(pageNo);
+    if(searchAnimes.length > 1){
+      searchAnime(searchAnimes)
+    }
+    else{
+      fetchAnimeData();
+    }
+  },[searchAnimes])
+
+  useEffect(() => {
+    if(searchAnimes?.length > 1){
+      searchAnime(searchAnimes)
+    }
+    else{
+      fetchAnimeData();
+    }
   }, [pageNo]);
 
   return (
@@ -237,6 +300,15 @@ export default function Catalog() {
           <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
             <h1 className="text-4xl font-bold">Catalog</h1>
 
+            <div>
+              <span className='border flex items-center justify-center'>
+                <form onSubmit={(e) => handleSearchClick(e)}>
+                  <input type="text" className='' name='search' />
+                  <button type='submit' ><CiSearch /></button>
+                </form>
+              </span>
+            </div>
+
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
@@ -285,10 +357,11 @@ export default function Catalog() {
               </button>
             </div>
           </div>
+
           {/* section bottom padding 24 */}
           <section aria-labelledby="products-heading" className="pt-6 pb-18">
             <h2 id="products-heading" className="sr-only text-whitediv">
-              Products
+              asdasd
             </h2>
 
             <div className="grid grid-cols-1 gap-x-10 gap-y-10 lg:grid-cols-4">
@@ -362,7 +435,7 @@ export default function Catalog() {
                     </Disclosure>
                   ))}
                 </div> */}
-                <Filter />
+                <Filter searchAnimes={searchAnimes} setSearchAnimes={setSearchAnimes} />
               </div>
 
               {/* Product grid */}
@@ -382,7 +455,7 @@ export default function Catalog() {
           <div className='flex justify-center'>
             <Pagination />
           </div>
-          
+
         </main>
 
 
